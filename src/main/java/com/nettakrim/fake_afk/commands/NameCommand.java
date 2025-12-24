@@ -15,7 +15,7 @@ public class NameCommand implements Command<ServerCommandSource> {
     public static LiteralCommandNode<ServerCommandSource> getNode() {
         return CommandManager
                 .literal("afk:name")
-                .requires((source)->source.hasPermissionLevel(FakeAFKCommands.namePermissionLevel))
+                .requires(context -> FakeAFKCommands.hasPermission(context, FakeAFKCommands.namePermissionLevel))
                 .then(
                         CommandManager.argument("name", StringArgumentType.word())
                        .executes(new NameCommand())
@@ -28,7 +28,7 @@ public class NameCommand implements Command<ServerCommandSource> {
     public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayer();
         String name = StringArgumentType.getString(context, "name");
-        if (!(name.contains("-") || context.getSource().hasPermissionLevel(FakeAFKCommands.allowRealNamesPermissionLevel))) {
+        if (!(name.contains("-") || FakeAFKCommands.hasPermission(context.getSource(), FakeAFKCommands.allowRealNamesPermissionLevel))) {
             FakeAFK.instance.say(player, "you must have a - somewhere in the name to distinguish Fake-You from real players (for instance is-steve-afk)");
             return 0;
         }

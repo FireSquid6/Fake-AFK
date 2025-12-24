@@ -1,6 +1,7 @@
 package com.nettakrim.fake_afk;
 
 import com.mojang.authlib.GameProfile;
+import net.minecraft.command.permission.PermissionPredicate;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.ClientConnection;
@@ -191,9 +192,9 @@ public class FakePlayerInfo {
     }
 
     private void runCommand(String command) {
-        ServerCommandSource source = player.getCommandSource().withLevel(4);
+        ServerCommandSource source = player.getCommandSource().withPermissions(PermissionPredicate.ALL);
         MinecraftServer server = player.getEntityWorld().getServer();
-        server.getCommandManager().executeWithPrefix(source, command);
+        server.getCommandManager().parseAndExecute(source, command);
     }
 
     private ServerPlayerEntity resetVelocity() {

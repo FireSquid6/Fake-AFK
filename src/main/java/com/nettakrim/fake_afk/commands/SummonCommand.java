@@ -13,7 +13,7 @@ public class SummonCommand implements Command<ServerCommandSource> {
     public static LiteralCommandNode<ServerCommandSource> getNode() {
         return CommandManager
                 .literal("afk:summon")
-                .requires((source)->source.hasPermissionLevel(FakeAFKCommands.summonPermissionLevel))
+                .requires(source -> FakeAFKCommands.hasPermission(source, FakeAFKCommands.summonPermissionLevel))
                 .executes(new SummonCommand())
                 .build();
     }

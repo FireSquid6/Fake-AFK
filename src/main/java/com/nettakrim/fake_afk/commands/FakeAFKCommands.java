@@ -4,6 +4,8 @@ import com.mojang.brigadier.tree.RootCommandNode;
 import com.nettakrim.fake_afk.FakeAFK;
 import com.nettakrim.fake_afk.PeekableScanner;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.command.permission.Permission;
+import net.minecraft.command.permission.PermissionLevel;
 import net.minecraft.server.command.ServerCommandSource;
 
 public class FakeAFKCommands {
@@ -48,5 +50,9 @@ public class FakeAFKCommands {
                "ready_permission_level: " + readyPermissionLevel + "\n" +
                "summon_permission_level: " + summonPermissionLevel + "\n" +
                "allow_real_names_permission_level: " + allowRealNamesPermissionLevel + "\n";
+    }
+
+    public static boolean hasPermission(ServerCommandSource source, int level) {
+        return source.getPermissions().hasPermission(new Permission.Level(PermissionLevel.fromLevel(level)));
     }
 }
